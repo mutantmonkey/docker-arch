@@ -62,7 +62,7 @@ ln -sf /usr/share/zoneinfo/UTC $rootfs/etc/localtime
 
 # generate and set locale
 echo 'en_US.UTF-8 UTF-8' > $rootfs/etc/locale.gen
-echo 'LANG=en_US.UTF-8"' > $rootfs/etc/locale.conf
+echo 'LANG="en_US.UTF-8"' > $rootfs/etc/locale.conf
 arch-chroot $rootfs locale-gen
 
 # create pacman mirrorlist
@@ -71,7 +71,10 @@ echo "Server = https://mirrors.kernel.org/archlinux/\$repo/os/\$arch" > $rootfs/
 # create pacman keyring; pkill gpg-agent so it cleans up its socket
 arch-chroot $rootfs /bin/sh -c "haveged -w 1024; pacman-key --init; pkill haveged; pacman -Rs --noconfirm haveged; pacman-key --populate archlinux; pkill gpg-agent"
 
-# tar it up
 echo "Building and compressing archive..."
 tar --numeric-owner --create --auto-compress --file rootfs.tar.xz --directory "$rootfs" --transform='s,^./,,' .
+
+echo "Cleaning up..."
+rm -rf $rootfs
+
 echo "Done."
