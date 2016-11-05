@@ -40,7 +40,6 @@ ignore_packages=(
 )
 
 # install only the base packages we need with pacstrap
-# taken from https://github.com/codekoala/docker-arch/blob/master/mkimage-arch.sh
 expect <<EOF
   set send_slow {1 .1}
   proc send {ignore arg} {
