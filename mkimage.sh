@@ -18,8 +18,6 @@ hash expect &>/dev/null || {
 
 rootfs=$(mktemp -d ${TMPDIR:-/var/tmp}/rootfs-archlinux-XXXXXXXXXX)
 ignore_packages=(
-    cryptsetup
-    device-mapper
     groff
     iproute2
     jfsutils
